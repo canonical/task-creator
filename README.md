@@ -41,7 +41,7 @@ export GITHUB_TOKEN=TOKEN
 ## Todo
 
 - [ ] Simplier installation
-  - [ ] Alternative environment variable 
+  - [ ] Alternative environment variable
   - [ ] Installer bootstrap on first run
 - [ ] Generic code
   - [ ] Get PIPELINE_ID from API calls instead of harcoded
