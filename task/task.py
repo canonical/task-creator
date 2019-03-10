@@ -3,8 +3,9 @@ import os
 import sys
 from pathlib import Path
 
-from api import github, zenhub
-from bootstrap import bootstrap
+import config
+from api.zenhub import ZenhubApi
+from api.github import GithubApi
 
 
 def parse_arguments(arguments):
@@ -32,17 +33,22 @@ def parse_arguments(arguments):
 
 
 def main(system_arguments):
+    github_api = GithubApi()
+    zenhub_api = ZenhubApi()
     config_file = str(Path.home()) + "/.config/task-creator.ini"
     if not os.path.isfile(config_file):
-        bootstrap(config_file)
+        configparser = config.bootstrap(config_file, github_api, zenhub_api)
+    else:
+        configparser = config.get_configuration(config_file)
+        config.set_env_from_config(configparser, github_api, zenhub_api)
 
     arguments = parse_arguments(system_arguments)
 
-    issue = github.create_issue(arguments["title"])
+    issue = github_api.create_issue(arguments["title"])
 
-    zenhub.move_issue_to_epic(arguments["epic-id"], issue.number)
-    zenhub.estimate_issue(issue.number, arguments["estimate"])
-    zenhub.move_to_in_progress(issue.number)
+    zenhub_api.move_issue_to_epic(arguments["epic-id"], issue.number)
+    zenhub_api.estimate_issue(issue.number, arguments["estimate"])
+    zenhub_api.move_to_in_progress(issue.number)
 
     print("Issue created")
 

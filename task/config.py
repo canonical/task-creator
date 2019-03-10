@@ -1,8 +1,23 @@
-from api import github, zenhub
 import configparser
 
 
-def bootstrap(config_file):
+def get_configuration(config_file):
+    config = configparser.ConfigParser()
+    config.read(config_file)
+
+    return config
+
+
+def set_env_from_config(config, github_api, zenhub_api):
+    github_api.set_env(config["github"]["token"], config["github"]["repo"])
+    zenhub_api.set_env(
+        config["zenhub"]["token"],
+        config["zenhub"]["repo_id"],
+        config["zenhub"]["pipeline_id"],
+    )
+
+
+def bootstrap(config_file, github_api, zenhub_api):
     github_token = input("Enter Github token: ")
     zenhub_token = input("Enter ZenHub token: ")
     github_repo = input("Enter GitHub repo (orga/repo): ")
@@ -11,13 +26,15 @@ def bootstrap(config_file):
     )
 
     try:
-        repo_id = github.get_repo_id(github_repo)
+        github_api.set_env(github_token, github_repo)
+        repo_id = github_api.get_repo_id()
     except Exception:
         print("Repository not found")
         exit(1)
 
     try:
-        board = zenhub.get_board(repo_id)
+        zenhub_api.set_env(zenhub_token, repo_id, zenhub_pipeline)
+        board = zenhub_api.get_board()
     except Exception:
         print("Error when requesting zenhub api")
         exit(1)
@@ -32,8 +49,7 @@ def bootstrap(config_file):
         print("Pipeline not found")
         exit(1)
 
-    config = configparser.ConfigParser()
-    config.read(config_file)
+    config = get_configuration(config_file)
     config["github"] = {}
     config["github"]["token"] = github_token
     config["github"]["repo"] = github_repo
@@ -44,3 +60,5 @@ def bootstrap(config_file):
 
     with open(config_file, "w+") as configfile:
         config.write(configfile)
+
+    return config
