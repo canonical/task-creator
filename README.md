@@ -24,31 +24,23 @@ optional arguments:
 
 - Generate a new token on [Github](https://github.com/settings/tokens) with repos scope.
 - Generate a new token on [Zenhub](https://app.zenhub.com/dashboard/tokens). **Be sure about this task, it will delete all existing tokens of the dashboard.**
-- Add these environment variables:
-
-```bash
-export ZENHUB_TOKEN=TOKEN
-export REPO_ID=REPO_ID
-export PIPELINE_ID=PIPELINE
-export GITHUB_REPO="REPO/NAME"
-export GITHUB_TOKEN=TOKEN
-```
-
 - Now run `python task/task.py EPIC_NUMBER ESTIMATE "Title Of the issue"`
+- Answer the questions asked
 - On you board the issue should be added under the epic EPIC_NUMBER with an estimate ESTIMATE and with the correct title.
 
 
 ## Todo
 
-- [ ] Simplier installation
-  - [ ] Alternative to environment variable (file `~/.taskrc` ?)
-  - [ ] Installer bootstrap on first run
-- [ ] Generic code
-  - [ ] Get PIPELINE_ID from API calls instead of harcoded (to do on bootstrap?)
-  - [ ] Get REPO_ID  from API calls instead of harcoded (to do on bootstrap?)
+- [x] Simplier installation
+  - [x] Alternative to environment variable (file `~/.config/task-creator.ini` ?)
+  - [x] Installer bootstrap on first run
+- [x] Generic code
+  - [x] Get `PIPELINE_ID` from API calls instead of harcoded (to do on bootstrap?)
+  - [x] Get `REPO_ID`  from API calls instead of harcoded (to do on bootstrap?)
 - [ ] Add issue to current iteration
 - [ ] Features ideas
   - [ ] Save epic-id to avoid rewriting it when every time
   - [ ] Add close argument that should close the last issue created
+  - [ ] Command clean to remove current configuration
 - [ ] Push to pypi
 - [ ] Create snap
