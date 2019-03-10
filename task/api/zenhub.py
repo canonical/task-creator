@@ -1,10 +1,11 @@
-import requests
 import os
+
+import requests
 
 ZENHUB_API = "https://api.zenhub.io"
 
 ZENHUB_TOKEN = os.getenv("ZENHUB_TOKEN")
-BASE_SQUAD_REPO_ID = os.getenv("BASE_SQUAD_REPO_ID")
+REPO_ID = os.getenv("REPO_ID")
 PIPELINE_ID = os.getenv("PIPELINE_ID")
 
 ESTIMATE_ISSUE = "".join(
@@ -26,18 +27,13 @@ session = requests.Session()
 
 def move_issue_to_epic(epic_id, issue_id):
     json = {
-        "add_issues": [
-            {"repo_id": BASE_SQUAD_REPO_ID, "issue_number": issue_id}
-        ]
+        "add_issues": [{"repo_id": int(REPO_ID), "issue_number": issue_id}]
     }
 
-    response = session.post(
-        url=UPDATE_ISSUE_EPIC.format(
-            repo_id=BASE_SQUAD_REPO_ID, epic_id=epic_id
-        ),
-        headers=HEADERS,
-        json=json,
-    )
+    print(json)
+    url = UPDATE_ISSUE_EPIC.format(repo_id=REPO_ID, epic_id=epic_id)
+    print(url)
+    response = session.post(url=url, headers=HEADERS, json=json)
 
     return response
 
@@ -46,9 +42,7 @@ def estimate_issue(issue_id, estimate):
     json = {"estimate": estimate}
 
     response = session.put(
-        url=ESTIMATE_ISSUE.format(
-            repo_id=BASE_SQUAD_REPO_ID, issue_id=issue_id
-        ),
+        url=ESTIMATE_ISSUE.format(repo_id=REPO_ID, issue_id=issue_id),
         headers=HEADERS,
         json=json,
     )
@@ -57,11 +51,9 @@ def estimate_issue(issue_id, estimate):
 
 
 def move_to_in_progress(issue_id):
-    json = {pipeline: PIPELINE_ID, position: "top"}
+    json = {"pipeline_id": PIPELINE_ID, "position": "top"}
     response = session.post(
-        url=MOVE_TO_PIPELINE.format(
-            repo_id=BASE_SQUAD_REPO_ID, issue_id=issue_id
-        ),
+        url=MOVE_TO_PIPELINE.format(repo_id=REPO_ID, issue_id=issue_id),
         headers=HEADERS,
         json=json,
     )

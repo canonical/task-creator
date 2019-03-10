@@ -1,5 +1,6 @@
-from github import Github
 import os
+
+from github import Github
 
 REPO = os.getenv("GITHUB_REPO")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")

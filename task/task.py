@@ -1,7 +1,5 @@
-# Core modules
 import argparse
 import sys
-import pkg_resources
 
 from api import github, zenhub
 
@@ -37,6 +35,9 @@ def main(system_arguments):
 
     zenhub.move_issue_to_epic(arguments["epic-id"], issue.number)
     zenhub.estimate_issue(issue.number, arguments["estimate"])
+    zenhub.move_to_in_progress(issue.number)
+
+    print("Issue created")
 
 
 if __name__ == "__main__":
