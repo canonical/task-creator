@@ -13,3 +13,9 @@ def create_issue(title):
     issue = repo.create_issue(title=title)
 
     return issue
+
+
+def get_repo_id(repo_name):
+    repo = g.get_repo(repo_name)
+
+    return repo.id

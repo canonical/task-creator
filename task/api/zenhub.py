@@ -20,6 +20,8 @@ MOVE_TO_PIPELINE = "".join(
     [ZENHUB_API, "/p1/repositories/{repo_id}/issues/{issue_id}/moves"]
 )
 
+REPOSITORY_BOARD = "".join([ZENHUB_API, "/p1/repositories/{repo_id}/board"])
+
 HEADERS = {"X-Authentication-Token": ZENHUB_TOKEN}
 
 session = requests.Session()
@@ -59,3 +61,11 @@ def move_to_in_progress(issue_id):
     )
 
     return response
+
+
+def get_board(repo_id):
+    response = session.get(
+        url=REPOSITORY_BOARD.format(repo_id=repo_id), headers=HEADERS
+    )
+
+    return response.json()

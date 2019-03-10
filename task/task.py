@@ -1,7 +1,10 @@
 import argparse
+import os
 import sys
+from pathlib import Path
 
 from api import github, zenhub
+from bootstrap import bootstrap
 
 
 def parse_arguments(arguments):
@@ -29,6 +32,10 @@ def parse_arguments(arguments):
 
 
 def main(system_arguments):
+    config_file = str(Path.home()) + "/.config/task-creator.ini"
+    if not os.path.isfile(config_file):
+        bootstrap(config_file)
+
     arguments = parse_arguments(system_arguments)
 
     issue = github.create_issue(arguments["title"])
