@@ -10,7 +10,7 @@ apps:
     plugs: [home, network-bind, network]
 
 parts:
-  task:
+  task-creator:
     plugin: python
     source: .
     parse-info: [setup.py]
