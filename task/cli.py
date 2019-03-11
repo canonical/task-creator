@@ -1,11 +1,10 @@
 import argparse
 import os
-import sys
 from pathlib import Path
 
-import config
-from api.zenhub import ZenhubApi
-from api.github import GithubApi
+from task import config
+from task.api.github import GithubApi
+from task.api.zenhub import ZenhubApi
 
 
 def parse_arguments(arguments):
@@ -51,7 +50,3 @@ def main(system_arguments):
     zenhub_api.move_to_in_progress(issue.number)
 
     print("Issue created")
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])

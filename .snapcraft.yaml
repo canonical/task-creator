@@ -1,0 +1,19 @@
+name: task
+summary: Create github issue
+adopt-info: task
+confinement: strict
+grade: stable
+
+apps:
+  task:
+    command: usr/bin/python3 -u $SNAP/bin/task.py
+    plugs: [network-bind, network]
+
+parts:
+  task:
+    plugin: python
+    source: .
+    parse-info: [setup.py]
+    requirements: requirements.txt
+    prime:
+      - -install
