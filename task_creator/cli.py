@@ -1,11 +1,10 @@
 import argparse
 import os
-import sys
 from pathlib import Path
 
-import config
-from api.zenhub import ZenhubApi
-from api.github import GithubApi
+from task_creator import config
+from task_creator.api.github import GithubApi
+from task_creator.api.zenhub import ZenhubApi
 
 
 def parse_arguments(arguments):
@@ -35,7 +34,7 @@ def parse_arguments(arguments):
 def main(system_arguments):
     github_api = GithubApi()
     zenhub_api = ZenhubApi()
-    config_file = str(Path.home()) + "/.config/task-creator.ini"
+    config_file = str(Path.home()) + "/.task-creator.ini"
     if not os.path.isfile(config_file):
         configparser = config.bootstrap(config_file, github_api, zenhub_api)
     else:
@@ -51,7 +50,3 @@ def main(system_arguments):
     zenhub_api.move_to_in_progress(issue.number)
 
     print("Issue created")
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])

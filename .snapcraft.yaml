@@ -1,0 +1,19 @@
+name: task-creator
+summary: Create github issue
+adopt-info: task-creator
+confinement: strict
+grade: stable
+
+apps:
+  task:
+    command: usr/bin/python3 -u $SNAP/bin/task.py
+    plugs: [home, network-bind, network]
+
+parts:
+  task-creator:
+    plugin: python
+    source: .
+    parse-info: [setup.py]
+    requirements: requirements.txt
+    prime:
+      - -install
