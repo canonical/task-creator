@@ -1,5 +1,7 @@
 # Task
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/task-creator)
+
 **This project is a work in progress.**
 
 A cool CLI tool to create an issue on GitHub, add it to a Zenhub epic, estimate it and move it to the Zenhub pipeline "In progress".
@@ -43,4 +45,4 @@ optional arguments:
   - [ ] Add close argument that should close the last issue created
   - [ ] Command clean to remove current configuration
 - [ ] Push to pypi
-- [ ] Create snap
+- [x] Create snap
