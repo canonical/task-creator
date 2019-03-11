@@ -2,9 +2,9 @@ import argparse
 import os
 from pathlib import Path
 
-from task import config
-from task.api.github import GithubApi
-from task.api.zenhub import ZenhubApi
+from task_creator import config
+from task_creator.api.github import GithubApi
+from task_creator.api.zenhub import ZenhubApi
 
 
 def parse_arguments(arguments):
@@ -34,7 +34,7 @@ def parse_arguments(arguments):
 def main(system_arguments):
     github_api = GithubApi()
     zenhub_api = ZenhubApi()
-    config_file = str(Path.home()) + "/.config/task-creator.ini"
+    config_file = str(Path.home()) + "/.task-creator.ini"
     if not os.path.isfile(config_file):
         configparser = config.bootstrap(config_file, github_api, zenhub_api)
     else:

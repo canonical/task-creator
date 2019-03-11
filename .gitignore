@@ -3,7 +3,7 @@
 __pycache__
 build/
 dist/
-task_creator.egg-info/
+*.egg-info/
 parts/
 prime/
 snap/

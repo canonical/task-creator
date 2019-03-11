@@ -7,7 +7,7 @@ grade: stable
 apps:
   task:
     command: usr/bin/python3 -u $SNAP/bin/task.py
-    plugs: [network-bind, network]
+    plugs: [home, network-bind, network]
 
 parts:
   task:
