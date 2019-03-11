@@ -1,6 +1,6 @@
-name: task
+name: task-creator
 summary: Create github issue
-adopt-info: task
+adopt-info: task-creator
 confinement: strict
 grade: stable
 
