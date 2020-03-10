@@ -1,2 +1,2 @@
-requests==2.22.0
-PyGithub==1.43.8
+requests==2.23.0
+PyGithub==1.46
